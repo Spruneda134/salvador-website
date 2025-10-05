@@ -1,4 +1,5 @@
 "use client";
+
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 
@@ -7,6 +8,7 @@ export default function Home() {
   const animRef = useRef(false);
   const TRANSITION_MS = 1000;
 
+  // === WHEEL NAVIGATION ===
   useEffect(() => {
     const handleWheel = (e: WheelEvent) => {
       if (animRef.current) return;
@@ -33,30 +35,112 @@ export default function Home() {
     if (index !== screen && !animRef.current) setScreen(index);
   };
 
+  // === MOUSE MOTION FOR SALVADOR IMAGE ===
+  const imageInnerRef = useRef<HTMLDivElement | null>(null);
+  const rafRef = useRef<number | null>(null);
+  const mouseRef = useRef({ x: window.innerWidth / 2, y: window.innerHeight / 2 });
+
+  useEffect(() => {
+    const update = () => {
+      rafRef.current = null;
+      const el = imageInnerRef.current;
+      if (!el) return;
+
+      // only move when Salvador image is visible (screen 0 or 1)
+      if (screen > 1) {
+        el.style.transform = "translate3d(0, 0, 0)";
+        return;
+      }
+
+      const rect = el.getBoundingClientRect();
+      const cx = rect.left + rect.width / 2;
+      const cy = rect.top + rect.height / 2;
+      const dx = mouseRef.current.x - cx;
+      const dy = mouseRef.current.y - cy;
+
+      const rx = dx / rect.width;
+      const ry = dy / rect.height;
+
+      const MAX_X = 12; // subtle horizontal motion
+      const MAX_Y = 10; // subtle vertical motion
+
+      const tx = -rx * MAX_X;
+      const ty = -ry * MAX_Y;
+
+      el.style.transform = `translate3d(${tx.toFixed(2)}px, ${ty.toFixed(
+        2
+      )}px, 0)`;
+    };
+
+    const handleMouseMove = (e: MouseEvent) => {
+      mouseRef.current = { x: e.clientX, y: e.clientY };
+      if (rafRef.current === null) rafRef.current = requestAnimationFrame(update);
+    };
+
+    const handleLeave = () => {
+      mouseRef.current = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+      if (rafRef.current === null) rafRef.current = requestAnimationFrame(update);
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mouseout", handleLeave);
+
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("mouseout", handleLeave);
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    };
+  }, [screen]);
+
   return (
     <div className="h-screen w-full overflow-hidden relative">
-      {/* === BACKGROUNDS === */}
-<div className="fixed top-0 left-0 w-full h-full bg-blue-100 -z-10" />
+      {/* === BACKGROUND === */}
+      <div className="fixed top-0 left-0 w-full h-full bg-blue-100 -z-10" />
 
-      {/* === IMAGE === */}
+      {/* === SALVADOR IMAGE === */}
       <div
         className={`absolute bottom-0 left-1/2 transform transition-all duration-1000 ease-in-out z-30 ${
           screen === 0
             ? "-translate-x-1/2 opacity-100"
             : screen === 1
-            ? "-translate-x-[700px] opacity-100"
+            ? "-translate-x-[700px] delay-200 opacity-100"
             : screen >= 2
-            ? "-translate-x-[1400px] opacity-0 pointer-events-none"
-            : "-translate-x-1/2 opacity-100"
+            ? "-translate-x-[1400px] delay-200 opacity-0 pointer-events-none"
+            : "-translate-x-1/2 delay-200 opacity-100"
         }`}
       >
-        <Image
-          src="/images/salvador.png"
-          alt="Salvador Pruneda"
-          width={600}
-          height={600}
-          className="w-[600px] h-auto transition-opacity duration-1000"
-        />
+        <div
+          ref={imageInnerRef}
+          className="transition-transform duration-300 ease-out will-change-transform"
+        >
+          <Image
+            src="/images/salvador.png"
+            alt="Salvador Pruneda"
+            width={1000}
+            height={1000}
+            className="w-auto h-[80vh] object-contain -mb-5 overflow-hidden"
+          />
+        </div>
+      </div>
+
+      {/* === GRAY BOX ANIMATION (screens 2–4) === */}
+      <div
+        className={`absolute top-1/2 left-1/2 transform transition-all duration-1000 ease-in-out z-30
+        ${
+          screen === 2
+            ? "translate-x-1/2 opacity-100 delay-0"
+            : screen === 3
+            ? "-translate-x-[540px] opacity-100 delay-200"
+            : screen === 4
+            ? "-translate-x-[1400px] opacity-0 pointer-events-none delay-500"
+            : "translate-x-[1400px] opacity-0 pointer-events-none delay-0"
+        }`}
+      >
+        <div className="bg-gray-300 h-[300px] w-[300px] flex items-center justify-center rounded-xl shadow-md">
+          <p className="text-xl font-semibold text-gray-700">
+            This is getting replaced
+          </p>
+        </div>
       </div>
 
       {/* === HORIZONTAL SCREENS (0–3) === */}
@@ -71,16 +155,18 @@ export default function Home() {
       >
         {/* SCREEN 1 */}
         <section className="flex-shrink-0 w-full h-screen flex flex-col justify-center items-center">
-          <div className="flex items-center justify-between max-w-[1140px] w-full mx-auto">
+          <div className="flex items-center justify-between max-w-[1140px] w-full mx-auto pb-30 2xl:pb-50">
             <div>
-              <h1 className="text-8xl font-bold leading-tight pl-10">Salvador</h1>
-              <h2 className="text-8xl font-bold leading-tight">Pruneda</h2>
+              <h1 className="text-8xl font-bold leading-none pl-15">
+                Salvador
+              </h1>
+              <h2 className="text-8xl font-bold leading-none">Pruneda</h2>
             </div>
             <div>
-              <h2 className="text-8xl font-bold leading-tight text-right pr-10">
+              <h2 className="text-8xl font-bold leading-none text-right pr-15">
                 Software
               </h2>
-              <h2 className="text-8xl font-bold leading-tight text-right">
+              <h2 className="text-8xl font-bold leading-none text-right">
                 Engineer
               </h2>
             </div>
@@ -132,33 +218,18 @@ export default function Home() {
                 software applications that balance performance, usability, and
                 scalability. From creating sleek, responsive user interfaces to
                 building robust backend systems, my projects showcase a wide
-                range of skills across modern frameworks and tools. Each project
-                reflects my focus on problem-solving, clean design, and
-                delivering impactful solutions for real-world needs.
+                range of skills across modern frameworks and tools.
               </p>
-              <div className="space-x-5 mt-4">
-                <button className="bg-gray-200 px-3 py-2 rounded-lg">
-                  Resume
-                </button>
-                <button className="bg-gray-200 px-3 py-2 rounded-lg">
-                  LinkedIn
-                </button>
-              </div>
             </div>
 
-            <div className="w-1/2">
-              <div className="bg-gray-300 h-50 w-2/3 mx-auto"></div>
-            </div>
+            <div className="w-1/2"></div>
           </div>
         </section>
 
         {/* SCREEN 4 */}
         <section className="flex-shrink-0 w-full h-screen flex flex-col justify-center items-center">
           <div className="flex items-center justify-between max-w-[1140px] w-full mx-auto">
-            
-            <div className="w-1/2">
-              <div className="bg-gray-300 h-50 w-2/3 mx-auto"></div>
-            </div>
+            <div className="w-1/2"></div>
 
             <div className="w-1/2 text-left pr-10">
               <h2 className="text-l font-semibold leading-tight">Experience</h2>
@@ -166,16 +237,11 @@ export default function Home() {
                 Making An Impact In The Rio Grande Valley
               </h3>
               <p className="mt-2">
-As a Software Engineer at RGVision Media in McAllen, TX, I build responsive, production-ready web applications using Next.js, TypeScript, Tailwind CSS, and Supabase. My work has led to faster load times, improved user experiences across devices, and consistent cross-browser performance. Serving the Rio Grande Valley, a predominantly Hispanic community, I take pride in creating digital solutions that make technology more accessible, reliable, and impactful for local businesses and organizations. I also manage full-cycle project delivery, collaborating with stakeholders to ensure solutions meet both technical standards and community needs.
+                As a Software Engineer at RGVision Media, I build responsive,
+                production-ready web applications using Next.js, TypeScript,
+                Tailwind CSS, and Supabase. My work improves load times and
+                enhances accessibility across devices for local businesses.
               </p>
-              <div className="space-x-5 mt-4">
-                <button className="bg-gray-200 px-3 py-2 rounded-lg">
-                  Resume
-                </button>
-                <button className="bg-gray-200 px-3 py-2 rounded-lg">
-                  LinkedIn
-                </button>
-              </div>
             </div>
           </div>
         </section>
@@ -185,8 +251,7 @@ As a Software Engineer at RGVision Media in McAllen, TX, I build responsive, pro
       <div
         className="absolute top-0 left-0 w-full transition-transform duration-1000 ease-in-out"
         style={{
-          transform:
-            screen === 4 ? "translateY(0)" : "translateY(100vh)",
+          transform: screen === 4 ? "translateY(0)" : "translateY(100vh)",
           zIndex: screen === 4 ? 30 : 0,
         }}
       >
@@ -195,16 +260,9 @@ As a Software Engineer at RGVision Media in McAllen, TX, I build responsive, pro
             <h2 className="text-l font-semibold leading-tight">Contact</h2>
             <h2 className="text-5xl font-bold mb-4">Let’s Connect!</h2>
             <p className="text-lg mb-6">
-              I’m always open to new opportunities, collaborations, and conversations about technology, design, and development. Whether you’re looking to build a project, discuss an idea, or just connect, feel free to reach out, I’d love to hear from you. Send me a message through Linkedin, or email me at spruneda134@gmail.com.
+              I’m always open to collaborations and opportunities. Email me at{" "}
+              <b>spruneda134@gmail.com</b>.
             </p>
-              <div className="space-x-5 mt-4">
-                <button className="bg-gray-200 px-3 py-2 rounded-lg">
-                  Resume
-                </button>
-                <button className="bg-gray-200 px-3 py-2 rounded-lg">
-                  LinkedIn
-                </button>
-              </div>
           </div>
         </section>
       </div>
