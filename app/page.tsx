@@ -38,7 +38,14 @@ export default function Home() {
   // === MOUSE MOTION FOR SALVADOR IMAGE ===
   const imageInnerRef = useRef<HTMLDivElement | null>(null);
   const rafRef = useRef<number | null>(null);
-  const mouseRef = useRef({ x: window.innerWidth / 2, y: window.innerHeight / 2 });
+const mouseRef = useRef({ x: 0, y: 0 });
+
+useEffect(() => {
+  mouseRef.current = {
+    x: window.innerWidth / 2,
+    y: window.innerHeight / 2,
+  };
+}, []);
 
   useEffect(() => {
     const update = () => {
