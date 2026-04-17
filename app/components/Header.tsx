@@ -8,7 +8,9 @@ import React from "react";
 const LINKS: { href: string; label: string }[] = [
   { href: "/", label: "Home" },
   { href: "/projects", label: "Projects" },
+  { href: "/portfolio", label: "Portfolio" },
   { href: "/experience", label: "Experience" },
+  { href: "/education", label: "Education" },
   { href: "https://www.linkedin.com/in/salvador-pruneda/", label: "Contact" },
 ];
 
