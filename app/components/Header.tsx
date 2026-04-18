@@ -18,7 +18,7 @@ export default function Header() {
   const pathname = usePathname?.() ?? "/";
 
   return (
-    <header className="w-full bg-white/90 backdrop-blur-sm shadow-sm fixed z-10">
+    <header className="w-full bg-white/90 backdrop-blur-sm shadow-sm fixed z-100">
       <nav
         aria-label="Main navigation"
         className="max-w-6xl mx-auto px-4"

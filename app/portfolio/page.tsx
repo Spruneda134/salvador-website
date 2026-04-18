@@ -6,97 +6,97 @@ export default function PortfolioPage() {
   const portfolioItems = [
     {
       title: "AHSTI",
-      image: "/portfolio/ahsti.jpg",
+      image: "/portfolio/1.png",
       website: "https://ahsti.org/",
     },
     {
       title: "Vida Careers",
-      image: "/portfolio/vidacareers.jpg",
+      image: "/portfolio/2.png",
       website: "https://vidacareers.org/",
     },
     {
       title: "RGV Partnership",
-      image: "/portfolio/rgvpartnership.jpg",
+      image: "/portfolio/3.png",
       website: "https://rgvpartnership.com/",
     },
     {
       title: "Peña Eye",
-      image: "/portfolio/penaeye.jpg",
+      image: "/portfolio/4.png",
       website: "https://penaeye.com/",
     },
     {
       title: "Lone Star Shredding",
-      image: "/portfolio/lonestarshredding.jpg",
+      image: "/portfolio/5.png",
       website: "https://lonestarshredding.com/",
     },
     {
       title: "Southern Bright Boot",
-      image: "/portfolio/southernbrightboot.jpg",
+      image: "/portfolio/6.png",
       website: "https://southernbrightboot.com/",
     },
     {
       title: "Statewide Insurance RGV",
-      image: "/portfolio/statewideinsurancergv.jpg",
+      image: "/portfolio/7.png",
       website: "https://statewideinsurancergv.com/",
     },
     {
       title: "NAM TX",
-      image: "/portfolio/namtx.jpg",
+      image: "/portfolio/8.png",
       website: "https://namtx.us/",
     },
     {
       title: "HCH Realty",
-      image: "/portfolio/hchrealty.jpg",
+      image: "/portfolio/9.png",
       website: "https://hchrealty.us/",
     },
     {
       title: "Hope Insurance",
-      image: "/portfolio/hopeins.jpg",
+      image: "/portfolio/10.png",
       website: "https://hopeins.us/",
     },
     {
       title: "Framework Homes",
-      image: "/portfolio/frameworkhomes.jpg",
+      image: "/portfolio/11.png",
       website: "https://frameworkhomes.us/",
     },
     {
       title: "VMK Companies",
-      image: "/portfolio/vmkcompanies.jpg",
+      image: "/portfolio/12.png",
       website: "https://vmkcompanies.com/",
     },
     {
       title: "AOTREC",
-      image: "/portfolio/aotrec.jpg",
+      image: "/portfolio/13.png",
       website: "https://aotrec.com/",
     },
     {
       title: "La Victoria Adult Day Care Centers",
-      image: "/portfolio/lavictoriaadultdaycarecenters.jpg",
+      image: "/portfolio/14.png",
       website: "https://trial.lavictoriaadultdaycarecenters.com/",
     },
     {
       title: "UCA STX",
-      image: "/portfolio/ucastx.jpg",
+      image: "/portfolio/15.png",
       website: "https://ucastx.com/",
     },
     {
       title: "LTR RGV",
-      image: "/portfolio/ltrrgv.jpg",
+      image: "/portfolio/16.png",
       website: "https://ltrrgv.com/",
     },
     {
       title: "Walter Reyna",
-      image: "/portfolio/walterreyna.jpg",
+      image: "/portfolio/17.png",
       website: "https://walterreyna.com/",
     },
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-100 to-gray-200 p-10 flex flex-col items-center">
-      <h1 className="text-5xl font-bold mb-12 tracking-tight drop-shadow-sm pt-20">Portfolio</h1>
+    <div className="min-h-screen bg-gradient-to-b from-gray-100 to-gray-200 px-4 sm:p-10 flex flex-col items-center">
+      <h1 className="text-3xl sm:text-5xl font-bold mb-8 sm:mb-12 tracking-tight drop-shadow-sm pt-12 sm:pt-20 text-center">Portfolio</h1>
 
       {/* GRID */}
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10 max-w-7xl w-full">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-10 max-w-7xl w-full">
         {portfolioItems.map((item, i) => (
           <motion.div
             key={i}
@@ -107,26 +107,26 @@ export default function PortfolioPage() {
             whileHover={{ scale: 1.03 }}
             className="bg-white rounded-3xl shadow-xl border overflow-hidden group cursor-pointer"
           >
-            <div className="relative h-56 w-full overflow-hidden">
+            <div className="relative h-40 sm:h-56 w-full overflow-hidden">
               <Image
                 src={item.image}
                 alt={item.title}
                 fill
-                className="object-cover transition-transform duration-500 group-hover:scale-110"
+                className="object-cover object-top transition-transform duration-500 group-hover:scale-110"
               />
             </div>
 
-            <div className="p-6">
-              <h2 className="text-2xl font-semibold mb-6 text-center transition-colors group-hover:text-sky-600">
+            <div className="p-4 sm:p-6">
+              <h2 className="text-lg sm:text-2xl font-semibold mb-4 sm:mb-6 text-center transition-colors group-hover:text-sky-600">
                 {item.title}
               </h2>
 
-              <div className="flex gap-4 justify-center">
+              <div className="flex gap-2 sm:gap-4 justify-center">
                 <a
                   href={item.website}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors"
+                  className="px-3 sm:px-4 py-2 text-sm sm:text-base bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors"
                 >
                   Visit Website
                 </a>
