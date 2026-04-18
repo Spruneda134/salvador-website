@@ -100,7 +100,95 @@ useEffect(() => {
   }, [screen]);
 
   return (
-    <div className="h-screen w-full overflow-hidden relative">
+    <>
+      {/* MOBILE LAYOUT (hidden on md and up) */}
+      <div className="md:hidden w-full bg-blue-100 min-h-screen overflow-y-auto">
+        {/* Hero Section */}
+        <section className="w-full min-h-screen flex flex-col items-center justify-center px-4 pt-12 pb-8 bg-gradient-to-b from-blue-100 to-white">
+          <div className="text-center mb-8">
+            <h1 className="text-5xl font-bold mb-2">Salvador</h1>
+            <h2 className="text-5xl font-bold mb-6">Pruneda</h2>
+            <p className="text-2xl font-semibold text-gray-700">Software Engineer</p>
+          </div>
+          
+          <Image
+            src="/images/salvador.png"
+            alt="Salvador Pruneda"
+            width={500}
+            height={500}
+            className="w-64 h-64 object-contain mb-8"
+          />
+
+          <div className="space-y-3 w-full max-w-xs">
+            <a href="#about" className="block bg-blue-600 text-white py-3 rounded-lg text-center font-semibold hover:bg-blue-700">
+              Learn More
+            </a>
+            <a href="#contact" className="block bg-gray-300 text-black py-3 rounded-lg text-center font-semibold hover:bg-gray-400">
+              Get In Touch
+            </a>
+          </div>
+        </section>
+
+        {/* About Section */}
+        <section id="about" className="w-full min-h-screen flex flex-col items-center justify-center px-4 py-20 bg-white">
+          <div className="max-w-md text-center">
+            <h2 className="text-4xl font-bold mb-4">About Me</h2>
+            <p className="text-lg text-gray-600 leading-relaxed mb-6">
+              Hello! I'm a software engineer with a passion for building responsive, user-friendly applications. I specialize in React, Next.js, TypeScript, and modern frameworks.
+            </p>
+            <div className="flex gap-3">
+              <button className="flex-1 bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700">
+                Resume
+              </button>
+              <button className="flex-1 bg-gray-300 text-black py-2 rounded-lg font-semibold hover:bg-gray-400">
+                LinkedIn
+              </button>
+            </div>
+          </div>
+        </section>
+
+        {/* Projects Section */}
+        <section className="w-full min-h-screen flex flex-col items-center justify-center px-4 py-20 bg-gray-50">
+          <div className="max-w-md text-center">
+            <h2 className="text-4xl font-bold mb-4">Projects</h2>
+            <p className="text-lg text-gray-600 leading-relaxed mb-6">
+              Full-stack web applications designed with modern frameworks and best practices. From sleek interfaces to robust backends.
+            </p>
+            <a href="/portfolio" className="inline-block bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700">
+              View Portfolio
+            </a>
+          </div>
+        </section>
+
+        {/* Experience Section */}
+        <section className="w-full min-h-screen flex flex-col items-center justify-center px-4 py-20 bg-white">
+          <div className="max-w-md text-center">
+            <h2 className="text-4xl font-bold mb-4">Experience</h2>
+            <p className="text-lg text-gray-600 leading-relaxed mb-6">
+              Software Engineer at RGVision Media, building production-ready applications with Next.js, TypeScript, and Tailwind CSS.
+            </p>
+            <a href="/experience" className="inline-block bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700">
+              View Experience
+            </a>
+          </div>
+        </section>
+
+        {/* Contact Section */}
+        <section id="contact" className="w-full min-h-screen flex flex-col items-center justify-center px-4 py-20 bg-gradient-to-b from-red-300 to-red-200">
+          <div className="max-w-md text-center">
+            <h2 className="text-4xl font-bold mb-4">Let's Connect!</h2>
+            <p className="text-lg text-gray-800 leading-relaxed mb-8">
+              I'm always open to collaboration and new opportunities.
+            </p>
+            <a href="mailto:spruneda134@gmail.com" className="inline-block bg-white text-red-600 px-8 py-3 rounded-lg font-bold hover:bg-gray-100">
+              Send Me an Email
+            </a>
+          </div>
+        </section>
+      </div>
+
+      {/* DESKTOP LAYOUT (hidden on mobile) */}
+      <div className="hidden md:block h-screen w-full overflow-hidden relative">
       {/* === BACKGROUND === */}
       <div className="fixed top-0 left-0 w-full h-full bg-blue-100 -z-10" />
 
@@ -110,9 +198,9 @@ useEffect(() => {
           screen === 0
             ? "-translate-x-1/2 opacity-100"
             : screen === 1
-            ? "-translate-x-[700px] delay-200 opacity-100"
+            ? "sm:-translate-x-[700px] -translate-x-1/2 delay-200 opacity-100"
             : screen >= 2
-            ? "-translate-x-[1400px] delay-200 opacity-0 pointer-events-none"
+            ? "sm:-translate-x-[1400px] -translate-x-1/2 delay-200 opacity-0 pointer-events-none"
             : "-translate-x-1/2 delay-200 opacity-100"
         }`}
       >
@@ -125,14 +213,14 @@ useEffect(() => {
             alt="Salvador Pruneda"
             width={1000}
             height={1000}
-            className="w-auto h-[80vh] object-contain -mb-5 overflow-hidden"
+            className="w-auto h-[60vh] sm:h-[80vh] object-contain -mb-2 sm:-mb-5 overflow-hidden"
           />
         </div>
       </div>
 
       {/* === GRAY BOX ANIMATION (screens 2–4) === */}
       <div
-        className={`absolute top-1/2 left-1/2 transform transition-all duration-1000 ease-in-out z-30
+        className={`hidden md:flex absolute top-1/2 left-1/2 transform transition-all duration-1000 ease-in-out z-30
         ${
           screen === 2
             ? "translate-x-1/2 opacity-100 delay-0"
@@ -161,19 +249,19 @@ useEffect(() => {
         }}
       >
         {/* SCREEN 1 */}
-        <section className="flex-shrink-0 w-full h-screen flex flex-col justify-center items-center">
-          <div className="flex items-center justify-between max-w-[1140px] w-full mx-auto pb-30 2xl:pb-50">
+        <section className="flex-shrink-0 w-full h-screen flex flex-col justify-center items-center px-4 sm:px-0">
+          <div className="flex flex-col sm:flex-row items-center sm:items-center justify-between max-w-[1140px] w-full mx-auto gap-4 sm:gap-0">
             <div>
-              <h1 className="text-8xl font-bold leading-none pl-15">
+              <h1 className="text-4xl sm:text-6xl md:text-8xl font-bold leading-none">
                 Salvador
               </h1>
-              <h2 className="text-8xl font-bold leading-none">Pruneda</h2>
+              <h2 className="text-4xl sm:text-6xl md:text-8xl font-bold leading-none">Pruneda</h2>
             </div>
             <div>
-              <h2 className="text-8xl font-bold leading-none text-right pr-15">
+              <h2 className="text-4xl sm:text-6xl md:text-8xl font-bold leading-none text-right">
                 Software
               </h2>
-              <h2 className="text-8xl font-bold leading-none text-right">
+              <h2 className="text-4xl sm:text-6xl md:text-8xl font-bold leading-none text-right">
                 Engineer
               </h2>
             </div>
@@ -181,15 +269,15 @@ useEffect(() => {
         </section>
 
         {/* SCREEN 2 */}
-        <section className="flex-shrink-0 w-full h-screen flex flex-col justify-center items-center">
-          <div className="flex items-center justify-between max-w-[1140px] w-full mx-auto">
-            <div className="w-1/2"></div>
-            <div className="w-1/2 text-left pr-10">
-              <h2 className="text-l font-semibold leading-tight">About Me</h2>
-              <h3 className="text-4xl font-semibold leading-tight">
+        <section className="flex-shrink-0 w-full h-screen flex flex-col justify-center items-center px-4 sm:px-0">
+          <div className="flex flex-col sm:flex-row items-center justify-between max-w-[1140px] w-full mx-auto gap-8 sm:gap-4">
+            <div className="hidden sm:block w-1/2"></div>
+            <div className="w-full sm:w-1/2 text-left">
+              <h2 className="text-xs sm:text-sm font-semibold leading-tight uppercase">About Me</h2>
+              <h3 className="text-2xl sm:text-4xl font-semibold leading-tight mt-2">
                 Bridging Design and Development
               </h3>
-              <p className="mt-2">
+              <p className="mt-4 text-sm sm:text-base leading-relaxed">
                 Hello! I’m Salvador Pruneda Jr, a software engineer with a
                 passion for building responsive, user-friendly applications that
                 balance functionality with great design. With experience in
@@ -198,11 +286,11 @@ useEffect(() => {
                 I enjoying playing music on my instruments, working out with
                 friends, and watching movies with my family.
               </p>
-              <div className="space-x-5 mt-4">
-                <button className="bg-gray-200 px-3 py-2 rounded-lg">
+              <div className="space-x-3 sm:space-x-5 mt-6 flex flex-wrap gap-3">
+                <button className="bg-gray-200 px-3 sm:px-4 py-2 rounded-lg text-sm sm:text-base hover:bg-gray-300 transition-colors">
                   Resume
                 </button>
-                <button className="bg-gray-200 px-3 py-2 rounded-lg">
+                <button className="bg-gray-200 px-3 sm:px-4 py-2 rounded-lg text-sm sm:text-base hover:bg-gray-300 transition-colors">
                   LinkedIn
                 </button>
               </div>
@@ -211,16 +299,16 @@ useEffect(() => {
         </section>
 
         {/* SCREEN 3 */}
-        <section className="flex-shrink-0 w-full h-screen flex flex-col justify-center items-center">
-          <div className="flex items-center justify-between max-w-[1140px] w-full mx-auto">
-            <div className="w-1/2 text-left pr-10">
-              <h2 className="text-l font-semibold leading-tight">
+        <section className="flex-shrink-0 w-full h-screen flex flex-col justify-center items-center px-4 sm:px-0">
+          <div className="flex flex-col sm:flex-row items-center justify-between max-w-[1140px] w-full mx-auto gap-8 sm:gap-4">
+            <div className="w-full sm:w-1/2 text-left">
+              <h2 className="text-xs sm:text-sm font-semibold leading-tight uppercase">
                 Projects & Portfolio
               </h2>
-              <h3 className="text-4xl font-semibold leading-tight">
+              <h3 className="text-2xl sm:text-4xl font-semibold leading-tight mt-2">
                 Full-Stack Applications From Design to Deployment
               </h3>
-              <p className="mt-2">
+              <p className="mt-4 text-sm sm:text-base leading-relaxed">
                 I specialize in designing and developing full-stack web and
                 software applications that balance performance, usability, and
                 scalability. From creating sleek, responsive user interfaces to
@@ -229,21 +317,21 @@ useEffect(() => {
               </p>
             </div>
 
-            <div className="w-1/2"></div>
+            <div className="hidden sm:block w-1/2"></div>
           </div>
         </section>
 
         {/* SCREEN 4 */}
-        <section className="flex-shrink-0 w-full h-screen flex flex-col justify-center items-center">
-          <div className="flex items-center justify-between max-w-[1140px] w-full mx-auto">
-            <div className="w-1/2"></div>
+        <section className="flex-shrink-0 w-full h-screen flex flex-col justify-center items-center px-4 sm:px-0">
+          <div className="flex flex-col sm:flex-row items-center justify-between max-w-[1140px] w-full mx-auto gap-8 sm:gap-4">
+            <div className="hidden sm:block w-1/2"></div>
 
-            <div className="w-1/2 text-left pr-10">
-              <h2 className="text-l font-semibold leading-tight">Experience</h2>
-              <h3 className="text-4xl font-semibold leading-tight">
+            <div className="w-full sm:w-1/2 text-left">
+              <h2 className="text-xs sm:text-sm font-semibold leading-tight uppercase">Experience</h2>
+              <h3 className="text-2xl sm:text-4xl font-semibold leading-tight mt-2">
                 Making An Impact In The Rio Grande Valley
               </h3>
-              <p className="mt-2">
+              <p className="mt-4 text-sm sm:text-base leading-relaxed">
                 As a Software Engineer at RGVision Media, I build responsive,
                 production-ready web applications using Next.js, TypeScript,
                 Tailwind CSS, and Supabase. My work improves load times and
@@ -262,11 +350,11 @@ useEffect(() => {
           zIndex: screen === 4 ? 30 : 0,
         }}
       >
-        <section className="w-full h-screen flex flex-col justify-center items-center relative bg-red-200">
+        <section className="w-full h-screen flex flex-col justify-center items-center relative bg-red-200 px-4">
           <div className="text-center max-w-[800px]">
-            <h2 className="text-l font-semibold leading-tight">Contact</h2>
-            <h2 className="text-5xl font-bold mb-4">Let’s Connect!</h2>
-            <p className="text-lg mb-6">
+            <h2 className="text-xs sm:text-sm font-semibold leading-tight uppercase">Contact</h2>
+            <h2 className="text-3xl sm:text-5xl font-bold mb-4 mt-3">Let's Connect!</h2>
+            <p className="text-base sm:text-lg mb-6 leading-relaxed">
               I’m always open to collaborations and opportunities. Email me at{" "}
               <b>spruneda134@gmail.com</b>.
             </p>
@@ -275,12 +363,12 @@ useEffect(() => {
       </div>
 
       {/* === PAGINATION === */}
-      <div className="absolute top-1/2 right-10 transform -translate-y-1/2 flex flex-col gap-3 z-50">
+      <div className="fixed bottom-4 right-4 sm:fixed sm:top-1/2 sm:right-10 sm:transform sm:-translate-y-1/2 flex flex-row sm:flex-col gap-2 sm:gap-3 z-50 bg-white/30 backdrop-blur-sm p-3 rounded-full sm:bg-transparent sm:p-0 sm:backdrop-blur-none">
         {[0, 1, 2, 3, 4].map((i) => (
           <button
             key={i}
             onClick={() => goToScreen(i)}
-            className={`w-3 h-3 rounded-full transition-all duration-300 ${
+            className={`w-2 sm:w-3 h-2 sm:h-3 rounded-full transition-all duration-300 ${
               screen === i
                 ? "bg-gray-800 scale-125"
                 : "bg-gray-400 hover:bg-gray-600"
@@ -289,6 +377,7 @@ useEffect(() => {
           />
         ))}
       </div>
-    </div>
+      </div>
+    </>
   );
 }
